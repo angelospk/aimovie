@@ -1,24 +1,24 @@
 <script lang="ts">
-	import type { MoviePreferences, LockedFilters } from '$lib/types/discover';
-	import { Button } from '$lib/components/ui/button';
-	import * as Select from '$lib/components/ui/select';
-	import * as ToggleGroup from '$lib/components/ui/toggle-group';
-	import * as Collapsible from '$lib/components/ui/collapsible';
-	import { generatePromptText } from '$lib/utils/promptGenerator';
+	import type { MoviePreferences, LockedFilters } from "$lib/types/discover";
+	import { Button } from "$lib/components/ui/button";
+	import * as Select from "$lib/components/ui/select";
+	import * as ToggleGroup from "$lib/components/ui/toggle-group";
+	import * as Collapsible from "$lib/components/ui/collapsible";
+	import { generatePromptText } from "$lib/utils/promptGenerator";
 	import {
 		getLockedFilters,
 		saveLockedFilters,
 		getLockedFilterValues,
-		saveLockedFilterValues
-	} from '$lib/utils/localStorage';
-	import { resetSignal } from '$lib/stores/discover';
-	import { ChevronDown, ChevronUp, Copy, Lock, Unlock } from 'lucide-svelte';
-	import { toast } from 'svelte-sonner';
-	import { onMount, untrack } from 'svelte';
-	import { browser } from '$app/environment';
-	import { settings } from '$lib/store.svelte';
+		saveLockedFilterValues,
+	} from "$lib/utils/localStorage";
+	import { resetSignal } from "$lib/stores/discover";
+	import { ChevronDown, ChevronUp, Copy, Lock, Unlock } from "lucide-svelte";
+	import { toast } from "svelte-sonner";
+	import { onMount, untrack } from "svelte";
+	import { browser } from "$app/environment";
+	import { settings } from "$lib/store.svelte";
 
-	type Language = 'el' | 'en';
+	type Language = "el" | "en";
 
 	interface FilterTranslations {
 		freeTextLabel: string;
@@ -81,233 +81,234 @@
 
 	const t: Record<Language, FilterTranslations> = {
 		el: {
-			freeTextLabel: 'Περιγράψτε τι θέλετε να δείτε',
-			freeTextPlaceholder: 'π.χ., μια ταινία sci-fi που θα σας κάνει να σκεφτείτε...',
-			genres: 'Είδη',
-			subGenres: 'Υποκατηγορίες',
-			contentType: 'Τύπος Περιεχομένου',
+			freeTextLabel: "Περιγράψτε τι θέλετε να δείτε",
+			freeTextPlaceholder:
+				"π.χ., μια ταινία sci-fi που θα σας κάνει να σκεφτείτε...",
+			genres: "Είδη",
+			subGenres: "Υποκατηγορίες",
+			contentType: "Τύπος Περιεχομένου",
 			contentTypeOptions: {
-				both: 'Ταινίες και Σειρές',
-				moviesOnly: 'Μόνο Ταινίες',
-				seriesOnly: 'Μόνο Σειρές'
+				both: "Ταινίες και Σειρές",
+				moviesOnly: "Μόνο Ταινίες",
+				seriesOnly: "Μόνο Σειρές",
 			},
-			countries: 'Χώρες',
-			period: 'Περίοδος',
-			periodPlaceholder: 'Επιλέξτε περίοδο',
-			moodTone: 'Διάθεση/Τόνος',
-			showAdvanced: 'Εμφάνιση Προηγμένων Φίλτρων',
-			hideAdvanced: 'Απόκρυψη Προηγμένων Φίλτρων',
-			copyPrompt: 'Αντιγραφή Prompt',
-			newSearch: 'Νέα Αναζήτηση',
-			getRecommendations: 'Λήψη Προτάσεων',
-			generating: 'Δημιουργία...',
-			none: '-- Κανένα --',
+			countries: "Χώρες",
+			period: "Περίοδος",
+			periodPlaceholder: "Επιλέξτε περίοδο",
+			moodTone: "Διάθεση/Τόνος",
+			showAdvanced: "Εμφάνιση Προηγμένων Φίλτρων",
+			hideAdvanced: "Απόκρυψη Προηγμένων Φίλτρων",
+			copyPrompt: "Αντιγραφή Prompt",
+			newSearch: "Νέα Αναζήτηση",
+			getRecommendations: "Λήψη Προτάσεων",
+			generating: "Δημιουργία...",
+			none: "-- Κανένα --",
 			// Advanced filter labels
-			pacing: 'Ρυθμός',
-			endingType: 'Τύπος Τέλους',
-			duration: 'Διάρκεια Ταινίας',
-			episodeDuration: 'Διάρκεια Επεισοδίου',
-			seriesDuration: 'Διάρκεια Σειράς',
-			intensity: 'Ένταση',
-			awards: 'Βραβεία',
-			criticAudience: 'Κριτικοί vs Κοινό',
-			basedOn: 'Βασισμένο σε',
-			discovery: 'Προτίμηση Ανακάλυψης',
+			pacing: "Ρυθμός",
+			endingType: "Τύπος Τέλους",
+			duration: "Διάρκεια Ταινίας",
+			episodeDuration: "Διάρκεια Επεισοδίου",
+			seriesDuration: "Διάρκεια Σειράς",
+			intensity: "Ένταση",
+			awards: "Βραβεία",
+			criticAudience: "Κριτικοί vs Κοινό",
+			basedOn: "Βασισμένο σε",
+			discovery: "Προτίμηση Ανακάλυψης",
 			// Placeholders
-			selectPacing: 'Επιλέξτε ρυθμό',
-			selectEndingType: 'Επιλέξτε τύπο τέλους',
-			selectDuration: 'Επιλέξτε διάρκεια',
-			selectEpisodeDuration: 'Επιλέξτε διάρκεια επεισοδίου',
-			selectSeriesDuration: 'Επιλέξτε διάρκεια σειράς',
-			selectIntensity: 'Επιλέξτε ένταση',
-			selectAwards: 'Επιλέξτε προτίμηση βραβείων',
-			selectCriticAudience: 'Επιλέξτε προτίμηση',
-			selectDiscovery: 'Επιλέξτε προτίμηση ανακάλυψης',
+			selectPacing: "Επιλέξτε ρυθμό",
+			selectEndingType: "Επιλέξτε τύπο τέλους",
+			selectDuration: "Επιλέξτε διάρκεια",
+			selectEpisodeDuration: "Επιλέξτε διάρκεια επεισοδίου",
+			selectSeriesDuration: "Επιλέξτε διάρκεια σειράς",
+			selectIntensity: "Επιλέξτε ένταση",
+			selectAwards: "Επιλέξτε προτίμηση βραβείων",
+			selectCriticAudience: "Επιλέξτε προτίμηση",
+			selectDiscovery: "Επιλέξτε προτίμηση ανακάλυψης",
 			// Option translations
 			countryOptions: {
-				US: 'Αμερικανικό',
-				EU: 'Ευρωπαϊκό',
-				OTHER: 'Άλλο'
+				US: "Αμερικανικό",
+				EU: "Ευρωπαϊκό",
+				OTHER: "Άλλο",
 			},
 			basedOnOptions: {
-				BOOK: 'Βιβλίο/Κόμικ',
-				TRUE_STORY: 'Αληθινή Ιστορία',
-				ORIGINAL: 'Πρωτότυπο Σενάριο',
-				GAME: 'Video Game',
-				PLAY: 'Θεατρικό',
-				REMAKE: 'Remake'
+				BOOK: "Βιβλίο/Κόμικ",
+				TRUE_STORY: "Αληθινή Ιστορία",
+				ORIGINAL: "Πρωτότυπο Σενάριο",
+				GAME: "Video Game",
+				PLAY: "Θεατρικό",
+				REMAKE: "Remake",
 			},
 			pacingOptions: {
-				SLOW: 'Αργός (Slow Burn)',
-				MEDIUM: 'Μέτριος',
-				FAST: 'Γρήγορος',
-				ACTION: 'Καταιγιστικός'
+				SLOW: "Αργός (Slow Burn)",
+				MEDIUM: "Μέτριος",
+				FAST: "Γρήγορος",
+				ACTION: "Καταιγιστικός",
 			},
 			endingTypeOptions: {
-				HAPPY: 'Χαρούμενο',
-				SAD: 'Λυπηρό/Τραγικό',
-				OPEN: 'Αμφίσημο/Ανοιχτό',
-				TWIST: 'Ανατροπή',
-				BITTERSWEET: 'Γλυκόπικρο',
-				CLIFFHANGER: 'Cliffhanger'
+				HAPPY: "Χαρούμενο",
+				SAD: "Λυπηρό/Τραγικό",
+				OPEN: "Αμφίσημο/Ανοιχτό",
+				TWIST: "Ανατροπή",
+				BITTERSWEET: "Γλυκόπικρο",
+				CLIFFHANGER: "Cliffhanger",
 			},
 			durationOptions: {
-				SHORT: 'Μικρή (< 90λ)',
-				MEDIUM: 'Κανονική (90-120λ)',
-				LONG: 'Μεγάλη (> 120λ)',
-				EPIC: 'Έπος (> 150λ)'
+				SHORT: "Μικρή (< 90λ)",
+				MEDIUM: "Κανονική (90-120λ)",
+				LONG: "Μεγάλη (> 120λ)",
+				EPIC: "Έπος (> 150λ)",
 			},
 			episodeDurationOptions: {
-				SHORT: 'Μικρά (< 30λ)',
-				MEDIUM: 'Κανονικά (30-60λ)',
-				LONG: 'Μεγάλα (> 60λ)'
+				SHORT: "Μικρά (< 30λ)",
+				MEDIUM: "Κανονικά (30-60λ)",
+				LONG: "Μεγάλα (> 60λ)",
 			},
 			seriesDurationOptions: {
-				MINI: 'Μίνι Σειρά',
-				SHORT: '1-3 Σεζόν',
-				MEDIUM: '4-6 Σεζόν',
-				LONG: '7+ Σεζόν'
+				MINI: "Μίνι Σειρά",
+				SHORT: "1-3 Σεζόν",
+				MEDIUM: "4-6 Σεζόν",
+				LONG: "7+ Σεζόν",
 			},
 			intensityOptions: {
-				LIGHT: 'Χαλαρό',
-				MODERATE: 'Μέτριο',
-				HIGH: 'Έντονο',
-				EXTREME: 'Ακραίο'
+				LIGHT: "Χαλαρό",
+				MODERATE: "Μέτριο",
+				HIGH: "Έντονο",
+				EXTREME: "Ακραίο",
 			},
 			awardsOptions: {
-				OSCARS: 'Οσκαρικά',
-				FESTIVAL: 'Φεστιβαλικά (Cannes, Venice)',
-				POPULAR: 'Δημοφιλή',
-				HIDDEN_GEMS: 'Κρυμμένα Διαμάντια'
+				OSCARS: "Οσκαρικά",
+				FESTIVAL: "Φεστιβαλικά (Cannes, Venice)",
+				POPULAR: "Δημοφιλή",
+				HIDDEN_GEMS: "Κρυμμένα Διαμάντια",
 			},
 			criticAudienceOptions: {
-				CRITICS: 'Αγαπημένα Κριτικών',
-				AUDIENCE: 'Αγαπημένα Κοινού',
-				BOTH: 'Αγαπημένα Όλων',
-				DIVISIVE: 'Διχασμένα'
+				CRITICS: "Αγαπημένα Κριτικών",
+				AUDIENCE: "Αγαπημένα Κοινού",
+				BOTH: "Αγαπημένα Όλων",
+				DIVISIVE: "Διχασμένα",
 			},
 			discoveryOptions: {
-				POPULAR: 'Δημοφιλή Τώρα',
-				CLASSICS: 'Κλασικά',
-				UNDERRATED: 'Υποτιμημένα',
-				NEW_RELEASES: 'Νέες Κυκλοφορίες'
+				POPULAR: "Δημοφιλή Τώρα",
+				CLASSICS: "Κλασικά",
+				UNDERRATED: "Υποτιμημένα",
+				NEW_RELEASES: "Νέες Κυκλοφορίες",
 			},
-			includeHistory: 'Συμπερίληψη ιστορικού θέασης'
+			includeHistory: "Συμπερίληψη ιστορικού θέασης",
 		},
 		en: {
-			freeTextLabel: 'Describe what you want to watch',
-			freeTextPlaceholder: 'e.g., a mind-bending sci-fi movie...',
-			genres: 'Genres',
-			subGenres: 'Sub-genres',
-			contentType: 'Content Type',
+			freeTextLabel: "Describe what you want to watch",
+			freeTextPlaceholder: "e.g., a mind-bending sci-fi movie...",
+			genres: "Genres",
+			subGenres: "Sub-genres",
+			contentType: "Content Type",
 			contentTypeOptions: {
-				both: 'Movies and Series',
-				moviesOnly: 'Movies Only',
-				seriesOnly: 'Series Only'
+				both: "Movies and Series",
+				moviesOnly: "Movies Only",
+				seriesOnly: "Series Only",
 			},
-			countries: 'Countries',
-			period: 'Period',
-			periodPlaceholder: 'Select period',
-			moodTone: 'Mood/Tone',
-			showAdvanced: 'Show Advanced Filters',
-			hideAdvanced: 'Hide Advanced Filters',
-			copyPrompt: 'Copy Prompt',
-			newSearch: 'New Search',
-			getRecommendations: 'Get Recommendations',
-			generating: 'Generating...',
-			none: '-- None --',
+			countries: "Countries",
+			period: "Period",
+			periodPlaceholder: "Select period",
+			moodTone: "Mood/Tone",
+			showAdvanced: "Show Advanced Filters",
+			hideAdvanced: "Hide Advanced Filters",
+			copyPrompt: "Copy Prompt",
+			newSearch: "New Search",
+			getRecommendations: "Get Recommendations",
+			generating: "Generating...",
+			none: "-- None --",
 			// Advanced filter labels
-			pacing: 'Pacing',
-			endingType: 'Ending Type',
-			duration: 'Movie Duration',
-			episodeDuration: 'Episode Duration',
-			seriesDuration: 'Series Duration',
-			intensity: 'Intensity',
-			awards: 'Awards',
-			criticAudience: 'Critic vs Audience',
-			basedOn: 'Based On',
-			discovery: 'Discovery Preference',
+			pacing: "Pacing",
+			endingType: "Ending Type",
+			duration: "Movie Duration",
+			episodeDuration: "Episode Duration",
+			seriesDuration: "Series Duration",
+			intensity: "Intensity",
+			awards: "Awards",
+			criticAudience: "Critic vs Audience",
+			basedOn: "Based On",
+			discovery: "Discovery Preference",
 			// Placeholders
-			selectPacing: 'Select pacing',
-			selectEndingType: 'Select ending type',
-			selectDuration: 'Select duration',
-			selectEpisodeDuration: 'Select episode duration',
-			selectSeriesDuration: 'Select series duration',
-			selectIntensity: 'Select intensity',
-			selectAwards: 'Select awards preference',
-			selectCriticAudience: 'Select preference',
-			selectDiscovery: 'Select discovery preference',
+			selectPacing: "Select pacing",
+			selectEndingType: "Select ending type",
+			selectDuration: "Select duration",
+			selectEpisodeDuration: "Select episode duration",
+			selectSeriesDuration: "Select series duration",
+			selectIntensity: "Select intensity",
+			selectAwards: "Select awards preference",
+			selectCriticAudience: "Select preference",
+			selectDiscovery: "Select discovery preference",
 			// Option translations
 			countryOptions: {
-				US: 'American',
-				EU: 'European',
-				OTHER: 'Other'
+				US: "American",
+				EU: "European",
+				OTHER: "Other",
 			},
 			basedOnOptions: {
-				BOOK: 'Book/Comic',
-				TRUE_STORY: 'True Story',
-				ORIGINAL: 'Original Screenplay',
-				GAME: 'Video Game',
-				PLAY: 'Play',
-				REMAKE: 'Remake'
+				BOOK: "Book/Comic",
+				TRUE_STORY: "True Story",
+				ORIGINAL: "Original Screenplay",
+				GAME: "Video Game",
+				PLAY: "Play",
+				REMAKE: "Remake",
 			},
 			pacingOptions: {
-				SLOW: 'Slow Burn',
-				MEDIUM: 'Medium',
-				FAST: 'Fast Paced',
-				ACTION: 'Non-stop Action'
+				SLOW: "Slow Burn",
+				MEDIUM: "Medium",
+				FAST: "Fast Paced",
+				ACTION: "Non-stop Action",
 			},
 			endingTypeOptions: {
-				HAPPY: 'Happy Ending',
-				SAD: 'Sad/Tragic',
-				OPEN: 'Ambiguous/Open',
-				TWIST: 'Twist Ending',
-				BITTERSWEET: 'Bittersweet',
-				CLIFFHANGER: 'Cliffhanger'
+				HAPPY: "Happy Ending",
+				SAD: "Sad/Tragic",
+				OPEN: "Ambiguous/Open",
+				TWIST: "Twist Ending",
+				BITTERSWEET: "Bittersweet",
+				CLIFFHANGER: "Cliffhanger",
 			},
 			durationOptions: {
-				SHORT: 'Short (< 90m)',
-				MEDIUM: 'Standard (90-120m)',
-				LONG: 'Long (> 120m)',
-				EPIC: 'Epic (> 150m)'
+				SHORT: "Short (< 90m)",
+				MEDIUM: "Standard (90-120m)",
+				LONG: "Long (> 120m)",
+				EPIC: "Epic (> 150m)",
 			},
 			episodeDurationOptions: {
-				SHORT: 'Short (< 30m)',
-				MEDIUM: 'Standard (30-60m)',
-				LONG: 'Long (> 60m)'
+				SHORT: "Short (< 30m)",
+				MEDIUM: "Standard (30-60m)",
+				LONG: "Long (> 60m)",
 			},
 			seriesDurationOptions: {
-				MINI: 'Miniseries',
-				SHORT: '1-3 Seasons',
-				MEDIUM: '4-6 Seasons',
-				LONG: '7+ Seasons'
+				MINI: "Miniseries",
+				SHORT: "1-3 Seasons",
+				MEDIUM: "4-6 Seasons",
+				LONG: "7+ Seasons",
 			},
 			intensityOptions: {
-				LIGHT: 'Light',
-				MODERATE: 'Moderate',
-				HIGH: 'Intense',
-				EXTREME: 'Extreme'
+				LIGHT: "Light",
+				MODERATE: "Moderate",
+				HIGH: "Intense",
+				EXTREME: "Extreme",
 			},
 			awardsOptions: {
-				OSCARS: 'Oscar Winners',
-				FESTIVAL: 'Festival Darlings',
-				POPULAR: 'Popular',
-				HIDDEN_GEMS: 'Hidden Gems'
+				OSCARS: "Oscar Winners",
+				FESTIVAL: "Festival Darlings",
+				POPULAR: "Popular",
+				HIDDEN_GEMS: "Hidden Gems",
 			},
 			criticAudienceOptions: {
 				CRITICS: "Critics' Favorites",
-				AUDIENCE: 'Audience Favorites',
-				BOTH: 'Universally Acclaimed',
-				DIVISIVE: 'Divisive'
+				AUDIENCE: "Audience Favorites",
+				BOTH: "Universally Acclaimed",
+				DIVISIVE: "Divisive",
 			},
 			discoveryOptions: {
-				POPULAR: 'Trending Now',
-				CLASSICS: 'Classics',
-				UNDERRATED: 'Underrated',
-				NEW_RELEASES: 'New Releases'
+				POPULAR: "Trending Now",
+				CLASSICS: "Classics",
+				UNDERRATED: "Underrated",
+				NEW_RELEASES: "New Releases",
 			},
-			includeHistory: 'Include viewing history'
-		}
+			includeHistory: "Include viewing history",
+		},
 	};
 
 	const tr = $derived(t[settings.lang as Language]);
@@ -323,27 +324,29 @@
 
 	// Default preferences
 	const defaultPrefs: MoviePreferences = {
-		freeText: '',
+		freeText: "",
 		includeHistory: true,
 		genres: [],
 		countries: [],
-		period: '',
-		contentType: 'Και Ταινίες και Σειρές',
+		period: "",
+		contentType: "Και Ταινίες και Σειρές",
 		mood: [],
-		pacing: '',
-		endingType: '',
-		duration: '',
-		episodeDuration: '',
-		seriesDuration: '',
-		intensity: '',
-		awards: '',
-		criticAudience: '',
+		pacing: "",
+		endingType: "",
+		duration: "",
+		episodeDuration: "",
+		seriesDuration: "",
+		intensity: "",
+		awards: "",
+		criticAudience: "",
 		basedOn: [],
-		discovery: '',
-		genreKeywords: {}
+		discovery: "",
+		genreKeywords: {},
 	};
 
-	let prefs: MoviePreferences = $state(initialPreferences || { ...defaultPrefs });
+	let prefs: MoviePreferences = $state(
+		initialPreferences || { ...defaultPrefs },
+	);
 	let lockedFilters = $state<LockedFilters>({});
 	let showAdvanced = $state(false);
 
@@ -358,7 +361,10 @@
 			let hasChanges = false;
 
 			for (const key in lockedFilters) {
-				if (lockedFilters[key] && savedValues[key as keyof MoviePreferences] !== undefined) {
+				if (
+					lockedFilters[key] &&
+					savedValues[key as keyof MoviePreferences] !== undefined
+				) {
 					// @ts-ignore - dynamic assignment
 					newPrefs[key] = savedValues[key as keyof MoviePreferences];
 					hasChanges = true;
@@ -405,25 +411,26 @@
 		const newPrefs = { ...prefs };
 
 		// Check each filter and reset if not locked
-		if (!lockedFilters.freeText) newPrefs.freeText = '';
+		if (!lockedFilters.freeText) newPrefs.freeText = "";
 		if (!lockedFilters.genres) {
 			newPrefs.genres = [];
 			newPrefs.genreKeywords = {};
 		}
 		if (!lockedFilters.countries) newPrefs.countries = [];
-		if (!lockedFilters.period) newPrefs.period = '';
-		if (!lockedFilters.contentType) newPrefs.contentType = 'Και Ταινίες και Σειρές';
+		if (!lockedFilters.period) newPrefs.period = "";
+		if (!lockedFilters.contentType)
+			newPrefs.contentType = "Και Ταινίες και Σειρές";
 		if (!lockedFilters.mood) newPrefs.mood = [];
-		if (!lockedFilters.pacing) newPrefs.pacing = '';
-		if (!lockedFilters.endingType) newPrefs.endingType = '';
-		if (!lockedFilters.duration) newPrefs.duration = '';
-		if (!lockedFilters.episodeDuration) newPrefs.episodeDuration = '';
-		if (!lockedFilters.seriesDuration) newPrefs.seriesDuration = '';
-		if (!lockedFilters.intensity) newPrefs.intensity = '';
-		if (!lockedFilters.awards) newPrefs.awards = '';
-		if (!lockedFilters.criticAudience) newPrefs.criticAudience = '';
+		if (!lockedFilters.pacing) newPrefs.pacing = "";
+		if (!lockedFilters.endingType) newPrefs.endingType = "";
+		if (!lockedFilters.duration) newPrefs.duration = "";
+		if (!lockedFilters.episodeDuration) newPrefs.episodeDuration = "";
+		if (!lockedFilters.seriesDuration) newPrefs.seriesDuration = "";
+		if (!lockedFilters.intensity) newPrefs.intensity = "";
+		if (!lockedFilters.awards) newPrefs.awards = "";
+		if (!lockedFilters.criticAudience) newPrefs.criticAudience = "";
 		if (!lockedFilters.basedOn) newPrefs.basedOn = [];
-		if (!lockedFilters.discovery) newPrefs.discovery = '';
+		if (!lockedFilters.discovery) newPrefs.discovery = "";
 
 		prefs = newPrefs;
 
@@ -438,20 +445,25 @@
 
 	async function copyPrompt() {
 		try {
-			const lang = (settings.lang === 'en' ? 'en' : 'el') as 'el' | 'en';
+			const lang = (settings.lang === "en" ? "en" : "el") as "el" | "en";
 			const promptText = generatePromptText(prefs, lang);
 			await navigator.clipboard.writeText(promptText);
 			const successMsg =
-				lang === 'el' ? 'Το prompt αντιγράφηκε στο clipboard!' : 'Prompt copied to clipboard!';
+				lang === "el"
+					? "Το prompt αντιγράφηκε στο clipboard!"
+					: "Prompt copied to clipboard!";
 			toast.success(successMsg, {
-				duration: 3000
+				duration: 3000,
 			});
 		} catch (err) {
-			console.error('Failed to copy prompt:', err);
-			const lang = (settings.lang === 'en' ? 'en' : 'el') as 'el' | 'en';
-			const errorMsg = lang === 'el' ? 'Αποτυχία αντιγραφής prompt' : 'Failed to copy prompt';
+			console.error("Failed to copy prompt:", err);
+			const lang = (settings.lang === "en" ? "en" : "el") as "el" | "en";
+			const errorMsg =
+				lang === "el"
+					? "Αποτυχία αντιγραφής prompt"
+					: "Failed to copy prompt";
 			toast.error(errorMsg, {
-				duration: 3000
+				duration: 3000,
 			});
 		}
 	}
@@ -489,185 +501,202 @@
 	});
 
 	const allGenres = [
-		'Action',
-		'Thriller',
-		'Horror',
-		'Mystery',
-		'Sci-Fi',
-		'Fantasy',
-		'Comedy',
-		'Drama',
-		'Crime',
-		'Romance',
-		'War',
-		'Western',
-		'Animation',
-		'Documentary',
-		'Adventure',
-		'Biography',
-		'History',
-		'Musical',
-		'Sport'
+		"Action",
+		"Thriller",
+		"Horror",
+		"Mystery",
+		"Sci-Fi",
+		"Fantasy",
+		"Comedy",
+		"Drama",
+		"Crime",
+		"Romance",
+		"War",
+		"Western",
+		"Animation",
+		"Documentary",
+		"Adventure",
+		"Biography",
+		"History",
+		"Musical",
+		"Sport",
 	];
 
 	const genreKeywords: Record<string, string[]> = {
 		Action: [
-			'High Octane',
-			'Martial Arts',
-			'Car Chase Focus',
-			'Espionage',
-			'Revenge Plot',
-			'Heist',
-			'Political Intrigue',
-			'Survival'
+			"High Octane",
+			"Martial Arts",
+			"Car Chase Focus",
+			"Espionage",
+			"Revenge Plot",
+			"Heist",
+			"Political Intrigue",
+			"Survival",
 		],
 		Thriller: [
-			'High Octane',
-			'Espionage',
-			'Revenge Plot',
-			'Heist',
-			'Political Intrigue',
-			'Survival',
-			'Psychological Tension'
+			"High Octane",
+			"Espionage",
+			"Revenge Plot",
+			"Heist",
+			"Political Intrigue",
+			"Survival",
+			"Psychological Tension",
 		],
 		Horror: [
-			'Supernatural',
-			'Slasher/Gore',
-			'Psychological Horror',
-			'Found Footage',
-			'Paranormal/Occult',
-			'Isolation Horror',
-			'Body Horror'
+			"Supernatural",
+			"Slasher/Gore",
+			"Psychological Horror",
+			"Found Footage",
+			"Paranormal/Occult",
+			"Isolation Horror",
+			"Body Horror",
 		],
 		Mystery: [
-			'Whodunit',
-			'Psychological Focus',
-			'Paranormal/Occult',
-			'Detective Story',
-			'Conspiracy'
+			"Whodunit",
+			"Psychological Focus",
+			"Paranormal/Occult",
+			"Detective Story",
+			"Conspiracy",
 		],
-		'Sci-Fi': [
-			'Cyberpunk',
-			'Space Opera',
-			'Time Travel',
-			'Artificial Intelligence',
-			'Post-Apocalyptic',
-			'Dystopia',
-			'Hard Sci-Fi',
-			'Alien Invasion'
+		"Sci-Fi": [
+			"Cyberpunk",
+			"Space Opera",
+			"Time Travel",
+			"Artificial Intelligence",
+			"Post-Apocalyptic",
+			"Dystopia",
+			"Hard Sci-Fi",
+			"Alien Invasion",
 		],
 		Fantasy: [
-			'Magic System Focus',
-			'Epic Fantasy',
-			'Urban Fantasy',
-			'Dark Fantasy',
-			'Mythology',
-			'Sword & Sorcery'
+			"Magic System Focus",
+			"Epic Fantasy",
+			"Urban Fantasy",
+			"Dark Fantasy",
+			"Mythology",
+			"Sword & Sorcery",
 		],
 		Comedy: [
-			'Dark Comedy/Satire',
-			'Slapstick',
-			'Buddy Comedy',
-			'Absurdist/Surreal',
-			'Parody/Spoof',
-			'Road Trip',
-			'Cringe Comedy',
-			'Romantic Comedy'
+			"Dark Comedy/Satire",
+			"Slapstick",
+			"Buddy Comedy",
+			"Absurdist/Surreal",
+			"Parody/Spoof",
+			"Road Trip",
+			"Cringe Comedy",
+			"Romantic Comedy",
 		],
 		Drama: [
-			'Courtroom Drama',
-			'Social Commentary',
-			'Psychological Focus',
-			'Family Drama',
-			'Character Study',
-			'Melodrama',
-			'Coming of Age'
+			"Courtroom Drama",
+			"Social Commentary",
+			"Psychological Focus",
+			"Family Drama",
+			"Character Study",
+			"Melodrama",
+			"Coming of Age",
 		],
 		Crime: [
-			'Gangster/Mafia',
-			'Neo-Noir',
-			'True Story Based',
-			'Detective Story',
-			'Heist',
-			'Police Procedural',
-			'Organized Crime'
+			"Gangster/Mafia",
+			"Neo-Noir",
+			"True Story Based",
+			"Detective Story",
+			"Heist",
+			"Police Procedural",
+			"Organized Crime",
 		],
 		Romance: [
-			'Erotic Tension',
-			'Unconventional Couple',
-			'Tragic Ending',
-			'Forbidden Love',
-			'Second Chance Romance',
-			'Love Triangle',
-			'Historical Romance',
-			'Romantic Comedy'
+			"Erotic Tension",
+			"Unconventional Couple",
+			"Tragic Ending",
+			"Forbidden Love",
+			"Second Chance Romance",
+			"Love Triangle",
+			"Historical Romance",
+			"Romantic Comedy",
 		],
 		War: [
-			'Historical Battle',
-			'Survival',
-			'Anti-War Message',
-			'Military Strategy',
-			'Behind Enemy Lines',
-			'Heroism Focus'
+			"Historical Battle",
+			"Survival",
+			"Anti-War Message",
+			"Military Strategy",
+			"Behind Enemy Lines",
+			"Heroism Focus",
 		],
 		Western: [
-			'Classic Western',
-			'Spaghetti Western',
-			'Revisionist Western',
-			'Revenge Plot',
-			'Outlaw Story'
+			"Classic Western",
+			"Spaghetti Western",
+			"Revisionist Western",
+			"Revenge Plot",
+			"Outlaw Story",
 		],
 		Animation: [
-			'Family-Friendly',
-			'Adult Animation',
-			'Stop Motion',
-			'Anime Style',
-			'Musical Elements'
+			"Family-Friendly",
+			"Adult Animation",
+			"Stop Motion",
+			"Anime Style",
+			"Musical Elements",
 		],
 		Documentary: [
-			'True Crime',
-			'Nature/Wildlife',
-			'Historical',
-			'Social Issues',
-			'Biography',
-			'Investigative'
-		]
+			"True Crime",
+			"Nature/Wildlife",
+			"Historical",
+			"Social Issues",
+			"Biography",
+			"Investigative",
+		],
 	};
 
-	const allCountries = ['US', 'EU', 'OTHER'];
+	const allCountries = ["US", "EU", "OTHER"];
 
 	const allMoods = [
-		'Ελαφρύ (Light)',
-		'Σοβαρό (Serious)',
-		'Dark',
-		'Uplifting',
-		'Cynical',
-		'Hopeful',
-		'Depressing'
+		"Ελαφρύ (Light)",
+		"Σοβαρό (Serious)",
+		"Dark",
+		"Uplifting",
+		"Cynical",
+		"Hopeful",
+		"Depressing",
 	];
 
-	const allBasedOn = ['BOOK', 'TRUE_STORY', 'ORIGINAL', 'GAME', 'PLAY', 'REMAKE'];
+	const allBasedOn = [
+		"BOOK",
+		"TRUE_STORY",
+		"ORIGINAL",
+		"GAME",
+		"PLAY",
+		"REMAKE",
+	];
 
-	const allPacing = ['SLOW', 'MEDIUM', 'FAST', 'ACTION'];
-	const allEndingTypes = ['HAPPY', 'SAD', 'OPEN', 'TWIST', 'BITTERSWEET', 'CLIFFHANGER'];
-	const allDurations = ['SHORT', 'MEDIUM', 'LONG', 'EPIC'];
-	const allEpisodeDurations = ['SHORT', 'MEDIUM', 'LONG'];
-	const allSeriesDurations = ['MINI', 'SHORT', 'MEDIUM', 'LONG'];
-	const allIntensities = ['LIGHT', 'MODERATE', 'HIGH', 'EXTREME'];
-	const allAwards = ['OSCARS', 'FESTIVAL', 'POPULAR', 'HIDDEN_GEMS'];
-	const allCriticAudience = ['CRITICS', 'AUDIENCE', 'BOTH', 'DIVISIVE'];
-	const allDiscovery = ['POPULAR', 'CLASSICS', 'UNDERRATED', 'NEW_RELEASES'];
+	const allPacing = ["SLOW", "MEDIUM", "FAST", "ACTION"];
+	const allEndingTypes = [
+		"HAPPY",
+		"SAD",
+		"OPEN",
+		"TWIST",
+		"BITTERSWEET",
+		"CLIFFHANGER",
+	];
+	const allDurations = ["SHORT", "MEDIUM", "LONG", "EPIC"];
+	const allEpisodeDurations = ["SHORT", "MEDIUM", "LONG"];
+	const allSeriesDurations = ["MINI", "SHORT", "MEDIUM", "LONG"];
+	const allIntensities = ["LIGHT", "MODERATE", "HIGH", "EXTREME"];
+	const allAwards = ["OSCARS", "FESTIVAL", "POPULAR", "HIDDEN_GEMS"];
+	const allCriticAudience = ["CRITICS", "AUDIENCE", "BOTH", "DIVISIVE"];
+	const allDiscovery = ["POPULAR", "CLASSICS", "UNDERRATED", "NEW_RELEASES"];
 </script>
 
 <form onsubmit={submit} class="space-y-6">
 	<div>
 		<div class="flex items-center justify-between mb-2">
-			<label for="freeText" class="block text-sm font-medium text-purple-200">
+			<label
+				for="freeText"
+				class="block text-sm font-medium text-purple-200"
+			>
 				{tr.freeTextLabel}
 			</label>
 			<button
 				type="button"
-				onclick={() => toggleLock('freeText')}
+				onclick={() => toggleLock("freeText")}
 				class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 				aria-label="Toggle lock"
 			>
@@ -682,14 +711,15 @@
 			id="freeText"
 			bind:value={prefs.freeText}
 			placeholder={tr.freeTextPlaceholder}
-			class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none overflow-hidden min-h-[2.5rem] max-h-[15rem]"
+			class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-white ring-offset-background placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none overflow-hidden min-h-[2.5rem] max-h-[15rem]"
 			rows="1"
 			onkeydown={(e) => {
 				// Auto-grow textarea
 				const target = e.currentTarget;
 				setTimeout(() => {
-					target.style.height = 'auto';
-					target.style.height = Math.min(target.scrollHeight, 240) + 'px';
+					target.style.height = "auto";
+					target.style.height =
+						Math.min(target.scrollHeight, 240) + "px";
 				}, 0);
 			}}
 		></textarea>
@@ -697,10 +727,14 @@
 
 	<div>
 		<div class="flex items-center justify-between mb-2">
-			<label for="genres" class="block text-sm font-medium text-purple-200">{tr.genres}</label>
+			<label
+				for="genres"
+				class="block text-sm font-medium text-purple-200"
+				>{tr.genres}</label
+			>
 			<button
 				type="button"
-				onclick={() => toggleLock('genres')}
+				onclick={() => toggleLock("genres")}
 				class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 				aria-label="Toggle lock"
 			>
@@ -712,7 +746,11 @@
 			</button>
 		</div>
 		<div class="space-y-3">
-			<ToggleGroup.Root type="multiple" bind:value={prefs.genres} class="flex flex-wrap gap-2">
+			<ToggleGroup.Root
+				type="multiple"
+				bind:value={prefs.genres}
+				class="flex flex-wrap gap-2"
+			>
 				{#each allGenres as genre (genre)}
 					<ToggleGroup.Item
 						value={genre}
@@ -725,8 +763,15 @@
 
 			{#each prefs.genres as genre (genre)}
 				{#if genreKeywords[genre] && prefs.genreKeywords[genre]}
-					<div class="ml-4 p-3 bg-white/5 rounded-lg border border-white/10">
-						<p class="block text-sm font-medium text-purple-200 mb-2">{genre} {tr.subGenres}:</p>
+					<div
+						class="ml-4 p-3 bg-white/5 rounded-lg border border-white/10"
+					>
+						<p
+							class="block text-sm font-medium text-purple-200 mb-2"
+						>
+							{genre}
+							{tr.subGenres}:
+						</p>
 						<ToggleGroup.Root
 							type="multiple"
 							bind:value={prefs.genreKeywords[genre]}
@@ -750,12 +795,15 @@
 
 	<div>
 		<div class="flex items-center justify-between mb-2">
-			<label for="contentType" class="block text-sm font-medium text-purple-200">
+			<label
+				for="contentType"
+				class="block text-sm font-medium text-purple-200"
+			>
 				{tr.contentType}
 			</label>
 			<button
 				type="button"
-				onclick={() => toggleLock('contentType')}
+				onclick={() => toggleLock("contentType")}
 				class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 				aria-label="Toggle lock"
 			>
@@ -770,29 +818,38 @@
 			<Select.Trigger class="w-full">
 				{prefs.contentType
 					? tr.contentTypeOptions[
-							prefs.contentType === 'BOTH'
-								? 'both'
-								: prefs.contentType === 'MOVIES'
-									? 'moviesOnly'
-									: 'seriesOnly'
+							prefs.contentType === "BOTH"
+								? "both"
+								: prefs.contentType === "MOVIES"
+									? "moviesOnly"
+									: "seriesOnly"
 						]
-					: 'Select content type'}
+					: "Select content type"}
 			</Select.Trigger>
 			<Select.Content>
-				<Select.Item value="BOTH">{tr.contentTypeOptions.both}</Select.Item>
-				<Select.Item value="MOVIES">{tr.contentTypeOptions.moviesOnly}</Select.Item>
-				<Select.Item value="SERIES">{tr.contentTypeOptions.seriesOnly}</Select.Item>
+				<Select.Item value="BOTH"
+					>{tr.contentTypeOptions.both}</Select.Item
+				>
+				<Select.Item value="MOVIES"
+					>{tr.contentTypeOptions.moviesOnly}</Select.Item
+				>
+				<Select.Item value="SERIES"
+					>{tr.contentTypeOptions.seriesOnly}</Select.Item
+				>
 			</Select.Content>
 		</Select.Root>
 	</div>
 
 	<div>
 		<div class="flex items-center justify-between mb-2">
-			<label for="countries" class="block text-sm font-medium text-purple-200">{tr.countries}</label
+			<label
+				for="countries"
+				class="block text-sm font-medium text-purple-200"
+				>{tr.countries}</label
 			>
 			<button
 				type="button"
-				onclick={() => toggleLock('countries')}
+				onclick={() => toggleLock("countries")}
 				class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 				aria-label="Toggle lock"
 			>
@@ -803,7 +860,11 @@
 				{/if}
 			</button>
 		</div>
-		<ToggleGroup.Root type="multiple" bind:value={prefs.countries} class="flex flex-wrap gap-2">
+		<ToggleGroup.Root
+			type="multiple"
+			bind:value={prefs.countries}
+			class="flex flex-wrap gap-2"
+		>
 			{#each allCountries as country (country)}
 				<ToggleGroup.Item
 					value={country}
@@ -830,10 +891,14 @@
 		<Collapsible.Content class="space-y-6">
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="pacing" class="block text-sm font-medium text-purple-200">{tr.pacing}</label>
+					<label
+						for="pacing"
+						class="block text-sm font-medium text-purple-200"
+						>{tr.pacing}</label
+					>
 					<button
 						type="button"
-						onclick={() => toggleLock('pacing')}
+						onclick={() => toggleLock("pacing")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -851,7 +916,9 @@
 					<Select.Content>
 						<Select.Item value="">{tr.none}</Select.Item>
 						{#each allPacing as item}
-							<Select.Item value={item}>{tr.pacingOptions[item]}</Select.Item>
+							<Select.Item value={item}
+								>{tr.pacingOptions[item]}</Select.Item
+							>
 						{/each}
 					</Select.Content>
 				</Select.Root>
@@ -859,12 +926,14 @@
 
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="endingType" class="block text-sm font-medium text-purple-200"
+					<label
+						for="endingType"
+						class="block text-sm font-medium text-purple-200"
 						>{tr.endingType}</label
 					>
 					<button
 						type="button"
-						onclick={() => toggleLock('endingType')}
+						onclick={() => toggleLock("endingType")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -877,26 +946,31 @@
 				</div>
 				<Select.Root type="single" bind:value={prefs.endingType}>
 					<Select.Trigger class="w-full">
-						{tr.endingTypeOptions[prefs.endingType] || tr.selectEndingType}
+						{tr.endingTypeOptions[prefs.endingType] ||
+							tr.selectEndingType}
 					</Select.Trigger>
 					<Select.Content>
 						<Select.Item value="">{tr.none}</Select.Item>
 						{#each allEndingTypes as item}
-							<Select.Item value={item}>{tr.endingTypeOptions[item]}</Select.Item>
+							<Select.Item value={item}
+								>{tr.endingTypeOptions[item]}</Select.Item
+							>
 						{/each}
 					</Select.Content>
 				</Select.Root>
 			</div>
 
-			{#if prefs.contentType !== 'SERIES'}
+			{#if prefs.contentType !== "SERIES"}
 				<div>
 					<div class="flex items-center justify-between mb-2">
-						<label for="duration" class="block text-sm font-medium text-purple-200"
+						<label
+							for="duration"
+							class="block text-sm font-medium text-purple-200"
 							>{tr.duration}</label
 						>
 						<button
 							type="button"
-							onclick={() => toggleLock('duration')}
+							onclick={() => toggleLock("duration")}
 							class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 							aria-label="Toggle lock"
 						>
@@ -909,27 +983,32 @@
 					</div>
 					<Select.Root type="single" bind:value={prefs.duration}>
 						<Select.Trigger class="w-full">
-							{tr.durationOptions[prefs.duration] || tr.selectDuration}
+							{tr.durationOptions[prefs.duration] ||
+								tr.selectDuration}
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Item value="">{tr.none}</Select.Item>
 							{#each allDurations as item}
-								<Select.Item value={item}>{tr.durationOptions[item]}</Select.Item>
+								<Select.Item value={item}
+									>{tr.durationOptions[item]}</Select.Item
+								>
 							{/each}
 						</Select.Content>
 					</Select.Root>
 				</div>
 			{/if}
 
-			{#if prefs.contentType !== 'MOVIES'}
+			{#if prefs.contentType !== "MOVIES"}
 				<div>
 					<div class="flex items-center justify-between mb-2">
-						<label for="episodeDuration" class="block text-sm font-medium text-purple-200"
+						<label
+							for="episodeDuration"
+							class="block text-sm font-medium text-purple-200"
 							>{tr.episodeDuration}</label
 						>
 						<button
 							type="button"
-							onclick={() => toggleLock('episodeDuration')}
+							onclick={() => toggleLock("episodeDuration")}
 							class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 							aria-label="Toggle lock"
 						>
@@ -940,14 +1019,22 @@
 							{/if}
 						</button>
 					</div>
-					<Select.Root type="single" bind:value={prefs.episodeDuration}>
+					<Select.Root
+						type="single"
+						bind:value={prefs.episodeDuration}
+					>
 						<Select.Trigger class="w-full">
-							{tr.episodeDurationOptions[prefs.episodeDuration] || tr.selectEpisodeDuration}
+							{tr.episodeDurationOptions[prefs.episodeDuration] ||
+								tr.selectEpisodeDuration}
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Item value="">{tr.none}</Select.Item>
 							{#each allEpisodeDurations as item}
-								<Select.Item value={item}>{tr.episodeDurationOptions[item]}</Select.Item>
+								<Select.Item value={item}
+									>{tr.episodeDurationOptions[
+										item
+									]}</Select.Item
+								>
 							{/each}
 						</Select.Content>
 					</Select.Root>
@@ -955,12 +1042,14 @@
 
 				<div>
 					<div class="flex items-center justify-between mb-2">
-						<label for="seriesDuration" class="block text-sm font-medium text-purple-200"
+						<label
+							for="seriesDuration"
+							class="block text-sm font-medium text-purple-200"
 							>{tr.seriesDuration}</label
 						>
 						<button
 							type="button"
-							onclick={() => toggleLock('seriesDuration')}
+							onclick={() => toggleLock("seriesDuration")}
 							class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 							aria-label="Toggle lock"
 						>
@@ -971,14 +1060,22 @@
 							{/if}
 						</button>
 					</div>
-					<Select.Root type="single" bind:value={prefs.seriesDuration}>
+					<Select.Root
+						type="single"
+						bind:value={prefs.seriesDuration}
+					>
 						<Select.Trigger class="w-full">
-							{tr.seriesDurationOptions[prefs.seriesDuration] || tr.selectSeriesDuration}
+							{tr.seriesDurationOptions[prefs.seriesDuration] ||
+								tr.selectSeriesDuration}
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Item value="">{tr.none}</Select.Item>
 							{#each allSeriesDurations as item}
-								<Select.Item value={item}>{tr.seriesDurationOptions[item]}</Select.Item>
+								<Select.Item value={item}
+									>{tr.seriesDurationOptions[
+										item
+									]}</Select.Item
+								>
 							{/each}
 						</Select.Content>
 					</Select.Root>
@@ -987,12 +1084,14 @@
 
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="intensity" class="block text-sm font-medium text-purple-200"
+					<label
+						for="intensity"
+						class="block text-sm font-medium text-purple-200"
 						>{tr.intensity}</label
 					>
 					<button
 						type="button"
-						onclick={() => toggleLock('intensity')}
+						onclick={() => toggleLock("intensity")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -1005,12 +1104,15 @@
 				</div>
 				<Select.Root type="single" bind:value={prefs.intensity}>
 					<Select.Trigger class="w-full">
-						{tr.intensityOptions[prefs.intensity] || tr.selectIntensity}
+						{tr.intensityOptions[prefs.intensity] ||
+							tr.selectIntensity}
 					</Select.Trigger>
 					<Select.Content>
 						<Select.Item value="">{tr.none}</Select.Item>
 						{#each allIntensities as item}
-							<Select.Item value={item}>{tr.intensityOptions[item]}</Select.Item>
+							<Select.Item value={item}
+								>{tr.intensityOptions[item]}</Select.Item
+							>
 						{/each}
 					</Select.Content>
 				</Select.Root>
@@ -1018,10 +1120,14 @@
 
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="awards" class="block text-sm font-medium text-purple-200">{tr.awards}</label>
+					<label
+						for="awards"
+						class="block text-sm font-medium text-purple-200"
+						>{tr.awards}</label
+					>
 					<button
 						type="button"
-						onclick={() => toggleLock('awards')}
+						onclick={() => toggleLock("awards")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -1039,7 +1145,9 @@
 					<Select.Content>
 						<Select.Item value="">{tr.none}</Select.Item>
 						{#each allAwards as item}
-							<Select.Item value={item}>{tr.awardsOptions[item]}</Select.Item>
+							<Select.Item value={item}
+								>{tr.awardsOptions[item]}</Select.Item
+							>
 						{/each}
 					</Select.Content>
 				</Select.Root>
@@ -1047,12 +1155,14 @@
 
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="criticAudience" class="block text-sm font-medium text-purple-200"
+					<label
+						for="criticAudience"
+						class="block text-sm font-medium text-purple-200"
 						>{tr.criticAudience}</label
 					>
 					<button
 						type="button"
-						onclick={() => toggleLock('criticAudience')}
+						onclick={() => toggleLock("criticAudience")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -1065,12 +1175,15 @@
 				</div>
 				<Select.Root type="single" bind:value={prefs.criticAudience}>
 					<Select.Trigger class="w-full">
-						{tr.criticAudienceOptions[prefs.criticAudience] || tr.selectCriticAudience}
+						{tr.criticAudienceOptions[prefs.criticAudience] ||
+							tr.selectCriticAudience}
 					</Select.Trigger>
 					<Select.Content>
 						<Select.Item value="">{tr.none}</Select.Item>
 						{#each allCriticAudience as item}
-							<Select.Item value={item}>{tr.criticAudienceOptions[item]}</Select.Item>
+							<Select.Item value={item}
+								>{tr.criticAudienceOptions[item]}</Select.Item
+							>
 						{/each}
 					</Select.Content>
 				</Select.Root>
@@ -1078,11 +1191,14 @@
 
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="basedOn" class="block text-sm font-medium text-purple-200">{tr.basedOn}</label
+					<label
+						for="basedOn"
+						class="block text-sm font-medium text-purple-200"
+						>{tr.basedOn}</label
 					>
 					<button
 						type="button"
-						onclick={() => toggleLock('basedOn')}
+						onclick={() => toggleLock("basedOn")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -1093,7 +1209,11 @@
 						{/if}
 					</button>
 				</div>
-				<ToggleGroup.Root type="multiple" bind:value={prefs.basedOn} class="flex flex-wrap gap-2">
+				<ToggleGroup.Root
+					type="multiple"
+					bind:value={prefs.basedOn}
+					class="flex flex-wrap gap-2"
+				>
 					{#each allBasedOn as item (item)}
 						<ToggleGroup.Item
 							value={item}
@@ -1107,12 +1227,14 @@
 
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<label for="discovery" class="block text-sm font-medium text-purple-200"
+					<label
+						for="discovery"
+						class="block text-sm font-medium text-purple-200"
 						>{tr.discovery}</label
 					>
 					<button
 						type="button"
-						onclick={() => toggleLock('discovery')}
+						onclick={() => toggleLock("discovery")}
 						class="p-1 rounded hover:bg-purple-500/20 transition-colors"
 						aria-label="Toggle lock"
 					>
@@ -1125,12 +1247,15 @@
 				</div>
 				<Select.Root type="single" bind:value={prefs.discovery}>
 					<Select.Trigger class="w-full">
-						{tr.discoveryOptions[prefs.discovery] || tr.selectDiscovery}
+						{tr.discoveryOptions[prefs.discovery] ||
+							tr.selectDiscovery}
 					</Select.Trigger>
 					<Select.Content>
 						<Select.Item value="">{tr.none}</Select.Item>
 						{#each allDiscovery as item}
-							<Select.Item value={item}>{tr.discoveryOptions[item]}</Select.Item>
+							<Select.Item value={item}
+								>{tr.discoveryOptions[item]}</Select.Item
+							>
 						{/each}
 					</Select.Content>
 				</Select.Root>

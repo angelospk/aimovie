@@ -1,0 +1,370 @@
+Loading svelte-check in workspace: /Users/harold/projects/aimovie
+Getting Svelte diagnostics...
+
+/Users/harold/projects/aimovie/src/lib/components/ui/sonner/sonner.svelte:3:23
+Error: Cannot find module 'mode-watcher' or its corresponding type declarations. (ts)
+	import { Toaster as Sonner, type ToasterProps as SonnerProps } from 'svelte-sonner';
+	import { mode } from 'mode-watcher';
+
+/Users/harold/projects/aimovie/src/lib/components/ui/toggle-group/toggle-group.svelte:36:3
+Warn: This reference only captures the initial value of `variant`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	setToggleGroupCtx({
+		variant,
+		size,
+
+/Users/harold/projects/aimovie/src/lib/components/ui/toggle-group/toggle-group.svelte:37:3
+Warn: This reference only captures the initial value of `size`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+		variant,
+		size,
+		spacing,
+
+/Users/harold/projects/aimovie/src/lib/components/ui/toggle-group/toggle-group.svelte:38:3
+Warn: This reference only captures the initial value of `spacing`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+		size,
+		spacing,
+	});
+
+/Users/harold/projects/aimovie/src/lib/queries/video-queries.ts:25:54
+Error: Property 'activeDatabaseIndex' does not exist on type '{ theme: Theme; lang: Language; systemConfig: any; }'. 
+	const config: SystemConfig | null = settings.systemConfig;
+	const activeDatabaseIndex: number | null = settings.activeDatabaseIndex;
+
+/Users/harold/projects/aimovie/src/lib/components/MoviePreferencesForm.svelte:346:39
+Warn: This reference only captures the initial value of `initialPreferences`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+
+	let prefs: MoviePreferences = $state(initialPreferences || { ...defaultPrefs });
+	let lockedFilters = $state<LockedFilters>({});
+
+/Users/harold/projects/aimovie/src/lib/components/RecommendationCard.svelte:66:33
+Warn: This reference only captures the initial value of `recommendation`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+	let verifiedImdbId = $state<string | null>(null);
+	let posterUrl = $state<string>(recommendation.imageUrl || '');
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "html"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "hr"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "abbr:where([title])"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "h1"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "h2"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "h3"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "h4"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "h5"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "h6"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "b"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "strong"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "code"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "kbd"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "samp"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "pre"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "small"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "sub"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "sup"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "sub"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "sup"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "table"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "progress"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "summary"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "ol"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "ul"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "menu"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "img"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "svg"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "video"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "canvas"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "audio"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "iframe"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "embed"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "object"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "img"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "video"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "input"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "optgroup"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "textarea"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector ":where(select:is([multiple], [size])) optgroup"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector ":where(select:is([multiple], [size])) optgroup option"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "textarea"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "input:where([type="button"], [type="reset"], [type="submit"])"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:120:8
+Warn: Unused CSS selector "[hidden]:where(:not([hidden="until-found"]))"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+<style>
+	@import "tailwindcss";
+
+/Users/harold/projects/aimovie/src/routes/+layout.svelte:124:3
+Warn: Unknown at rule @apply (css)
+	.container {
+		@apply max-w-7xl mx-auto px-4;
+	}
+
+====================================
+svelte-check found 2 errors and 51 warnings in 6 files
