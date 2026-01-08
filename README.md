@@ -1,38 +1,66 @@
-# sv
+# AI Movie Consultant 🎬
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Ο **AI Movie Consultant** είναι ένας προηγμένος ψηφιακός σύμβουλος κινηματογράφου που χρησιμοποιεί την τεχνητή νοημοσύνη (Gemini & OpenRouter) για να σας προσφέρει προσωποποιημένες προτάσεις ταινιών και σειρών.
 
-## Creating a project
+## ✨ Χαρακτηριστικά
 
-If you're seeing this, you've probably already done this step. Congrats!
+-   **🤖 Έξυπνες Προτάσεις AI**: Λάβετε 10-12 προσαρμοσμένες προτάσεις βάσει των προτιμήσεών σας.
+-   **🌍 Δίγλωσση Υποστήριξη**: Πλήρως μεταφρασμένο περιβάλλον εργασίας σε Ελληνικά και Αγγλικά.
+-   **📺 YouTube Trailers**: Άμεση πρόσβαση σε trailer για κάθε πρόταση με ένα κλικ.
+-   **🎬 IMDb Integration**: Σύνδεσμοι προς τις επίσημες σελίδες του IMDb για λεπτομερείς πληροφορίες.
+-   **📋 Διαχείριση Λίστας**:
+    -   **Watchlist**: Αποθηκεύστε ταινίες που θέλετε να δείτε.
+    -   **Ιστορικό (Watched)**: Κρατήστε αρχείο με όσα έχετε ήδη δει.
+    -   **Not Interested**: Φιλτράρετε προτάσεις που δεν σας ταιριάζουν.
+-   **🌙 Modern Dark UI**: Κομψό περιβάλλον εργασίας με dark theme, σχεδιασμένο για βελτιωμένη εμπειρία θέασης.
+-   **⚡ Svelte 5**: Χτισμένο με την τελευταία λέξη της τεχνολογίας (Runes) για μέγιστη ταχύτητα.
 
-```sh
-# create a new project in the current directory
-npx sv create
+## 🛠️ Τεχνολογίες
 
-# create a new project in my-app
-npx sv create my-app
+-   **Framework**: [SvelteKit](https://kit.svelte.dev/) (με Svelte 5 Runes)
+-   **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+-   **AI Engines**: Google Gemini Flash & OpenRouter (Gemma/Mimo)
+-   **Icons**: Lucide Svelte
+-   **Package Manager**: Bun
+
+## 🚀 Οδηγίες Εγκατάστασης
+
+### 1. Κλωνοποίηση και Εγκατάσταση
+Απαιτείται το [Bun](https://bun.sh/) εγκατεστημένο στο σύστημά σας.
+
+```bash
+# Εγκατάσταση πακέτων
+bun install
 ```
 
-## Developing
+### 2. Ρύθμιση API Keys
+Δημιουργήστε ένα αρχείο `.env` στον κεντρικό φάκελο και προσθέστε τα κλειδιά σας:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```env
+# Google Gemini API Key
+GEMINI_API_KEY=to_kleidi_sas_edw
 
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# OpenRouter API Key (Προαιρετικό για fallback)
+OPENROUTER_API_KEY=to_kleidi_sas_edw
 ```
 
-## Building
+### 3. Εκκίνηση του Project
+Τρέξτε το development server:
 
-To create a production version of your app:
-
-```sh
-npm run build
+```bash
+bun dev
 ```
+Η εφαρμογή θα είναι διαθέσιμη στο `http://localhost:5173`.
 
-You can preview the production build with `npm run preview`.
+## 📖 Πώς να το χρησιμοποιήσετε
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+1.  **Περιγράψτε τι ψάχνετε**: Στο πεδίο αναζήτησης, γράψτε ελεύθερα (π.χ. "ψάχνω μια ταινία επιστημονικής φαντασίας με ατμόσφαιρα μυστηρίου").
+2.  **Ρυθμίστε τα φίλτρα**: Επιλέξτε γλώσσα, είδος ή αν προτιμάτε ταινία ή σειρά.
+3.  **Εξερευνήστε τις προτάσεις**:
+    -   Κάντε κλικ στο **YouTube** εικονίδιο για να δείτε το trailer.
+    -   Κάντε κλικ στο **IMDb** για λεπτομέρειες.
+    -   Προσθέστε στη **Watchlist** για να μην το ξεχάσετε.
+4.  **Δείτε το Ιστορικό σας**: Πατήστε το εικονίδιο του ιστορικού στο πάνω μέρος για να δείτε παλιότερες αναζητήσεις και αποθηκευμένα αντικείμενα.
+
+## 📄 Άδεια Χρήσης
+Αυτό το project δημιουργήθηκε για προσωπική χρήση και επίδειξη τεχνολογιών AI & Svelte 5.

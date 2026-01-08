@@ -86,10 +86,10 @@
 						>
 							<button
 								onclick={toggleLang}
-								class="flex items-center justify-center rounded-full w-8 h-8 bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-								title="Language"
+								class="flex items-center justify-center rounded-md px-2 py-1 text-xs font-bold uppercase tracking-wider bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20 hover:text-white transition-all duration-200"
+								title="Switch Language"
 							>
-								{lang === "el" ? "🇬🇷" : "🇬Β"}
+								{lang === "el" ? "EL" : "EN"}
 							</button>
 						</div>
 					</div>
