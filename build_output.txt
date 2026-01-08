@@ -1,0 +1,866 @@
+$ vite build
+vite v7.3.1 building ssr environment for production...
+transforming...
+12:01:33 PM [vite-plugin-svelte] src/lib/components/MoviePreferencesForm.svelte:346:38 This reference only captures the initial value of `initialPreferences`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+344:   };
+345: 
+346:   let prefs: MoviePreferences = $state(initialPreferences || { ...defaultPrefs });
+                                                              ^
+347:   let lockedFilters = $state<LockedFilters>({});
+348:   let showAdvanced = $state(false);
+12:01:33 PM [vite-plugin-svelte] src/lib/components/RecommendationCard.svelte:66:32 This reference only captures the initial value of `recommendation`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+64:   let rating = $state<MovieUserRating | null>(null);
+65:   let verifiedImdbId = $state<string | null>(null);
+66:   let posterUrl = $state<string>(recommendation.imageUrl || '');
+                                                   ^
+67: 
+68:   // Load rating and list status on mount
+12:01:36 PM [vite-plugin-svelte] src/lib/components/ui/toggle-group/toggle-group.svelte:36:2 This reference only captures the initial value of `variant`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+34: 
+35:   setToggleGroupCtx({
+36:     variant,
+               ^
+37:     size,
+38:     spacing,
+12:01:36 PM [vite-plugin-svelte] src/lib/components/ui/toggle-group/toggle-group.svelte:37:2 This reference only captures the initial value of `size`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+35:   setToggleGroupCtx({
+36:     variant,
+37:     size,
+            ^
+38:     spacing,
+39:   });
+12:01:36 PM [vite-plugin-svelte] src/lib/components/ui/toggle-group/toggle-group.svelte:38:2 This reference only captures the initial value of `spacing`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+36:     variant,
+37:     size,
+38:     spacing,
+               ^
+39:   });
+40: </script>
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:633:2 Unused CSS selector "html"
+https://svelte.dev/e/css_unused_selector
+631: */
+632: 
+633:   html,
+           ^
+634:   :host {
+635:     line-height: 1.5; /* 1 */
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:665:2 Unused CSS selector "hr"
+https://svelte.dev/e/css_unused_selector
+663: */
+664: 
+665:   hr {
+         ^
+666:     height: 0; /* 1 */
+667:     color: inherit; /* 2 */
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:675:2 Unused CSS selector "abbr:where([title])"
+https://svelte.dev/e/css_unused_selector
+673: */
+674: 
+675:   abbr:where([title]) {
+                          ^
+676:     -webkit-text-decoration: underline dotted;
+677:     text-decoration: underline dotted;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:684:2 Unused CSS selector "h1"
+https://svelte.dev/e/css_unused_selector
+682: */
+683: 
+684:   h1,
+         ^
+685:   h2,
+686:   h3,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:685:2 Unused CSS selector "h2"
+https://svelte.dev/e/css_unused_selector
+683: 
+684:   h1,
+685:   h2,
+         ^
+686:   h3,
+687:   h4,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:686:2 Unused CSS selector "h3"
+https://svelte.dev/e/css_unused_selector
+684:   h1,
+685:   h2,
+686:   h3,
+         ^
+687:   h4,
+688:   h5,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:687:2 Unused CSS selector "h4"
+https://svelte.dev/e/css_unused_selector
+685:   h2,
+686:   h3,
+687:   h4,
+         ^
+688:   h5,
+689:   h6 {
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:688:2 Unused CSS selector "h5"
+https://svelte.dev/e/css_unused_selector
+686:   h3,
+687:   h4,
+688:   h5,
+         ^
+689:   h6 {
+690:     font-size: inherit;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:689:2 Unused CSS selector "h6"
+https://svelte.dev/e/css_unused_selector
+687:   h4,
+688:   h5,
+689:   h6 {
+         ^
+690:     font-size: inherit;
+691:     font-weight: inherit;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:708:2 Unused CSS selector "b"
+https://svelte.dev/e/css_unused_selector
+706: */
+707: 
+708:   b,
+        ^
+709:   strong {
+710:     font-weight: bolder;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:709:2 Unused CSS selector "strong"
+https://svelte.dev/e/css_unused_selector
+707: 
+708:   b,
+709:   strong {
+             ^
+710:     font-weight: bolder;
+711:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:720:2 Unused CSS selector "code"
+https://svelte.dev/e/css_unused_selector
+718: */
+719: 
+720:   code,
+           ^
+721:   kbd,
+722:   samp,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:721:2 Unused CSS selector "kbd"
+https://svelte.dev/e/css_unused_selector
+719: 
+720:   code,
+721:   kbd,
+          ^
+722:   samp,
+723:   pre {
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:722:2 Unused CSS selector "samp"
+https://svelte.dev/e/css_unused_selector
+720:   code,
+721:   kbd,
+722:   samp,
+           ^
+723:   pre {
+724:     font-family: --theme(
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:723:2 Unused CSS selector "pre"
+https://svelte.dev/e/css_unused_selector
+721:   kbd,
+722:   samp,
+723:   pre {
+          ^
+724:     font-family: --theme(
+725:       --default-mono-font-family,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:750:2 Unused CSS selector "small"
+https://svelte.dev/e/css_unused_selector
+748: */
+749: 
+750:   small {
+            ^
+751:     font-size: 80%;
+752:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:758:2 Unused CSS selector "sub"
+https://svelte.dev/e/css_unused_selector
+756: */
+757: 
+758:   sub,
+          ^
+759:   sup {
+760:     font-size: 75%;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:759:2 Unused CSS selector "sup"
+https://svelte.dev/e/css_unused_selector
+757: 
+758:   sub,
+759:   sup {
+          ^
+760:     font-size: 75%;
+761:     line-height: 0;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:766:2 Unused CSS selector "sub"
+https://svelte.dev/e/css_unused_selector
+764:   }
+765: 
+766:   sub {
+          ^
+767:     bottom: -0.25em;
+768:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:770:2 Unused CSS selector "sup"
+https://svelte.dev/e/css_unused_selector
+768:   }
+769: 
+770:   sup {
+          ^
+771:     top: -0.5em;
+772:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:780:2 Unused CSS selector "table"
+https://svelte.dev/e/css_unused_selector
+778: */
+779: 
+780:   table {
+            ^
+781:     text-indent: 0; /* 1 */
+782:     border-color: inherit; /* 2 */
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:798:2 Unused CSS selector "progress"
+https://svelte.dev/e/css_unused_selector
+796: */
+797: 
+798:   progress {
+               ^
+799:     vertical-align: baseline;
+800:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:806:2 Unused CSS selector "summary"
+https://svelte.dev/e/css_unused_selector
+804: */
+805: 
+806:   summary {
+              ^
+807:     display: list-item;
+808:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:814:2 Unused CSS selector "ol"
+https://svelte.dev/e/css_unused_selector
+812: */
+813: 
+814:   ol,
+         ^
+815:   ul,
+816:   menu {
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:815:2 Unused CSS selector "ul"
+https://svelte.dev/e/css_unused_selector
+813: 
+814:   ol,
+815:   ul,
+         ^
+816:   menu {
+817:     list-style: none;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:816:2 Unused CSS selector "menu"
+https://svelte.dev/e/css_unused_selector
+814:   ol,
+815:   ul,
+816:   menu {
+           ^
+817:     list-style: none;
+818:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:826:2 Unused CSS selector "img"
+https://svelte.dev/e/css_unused_selector
+824: */
+825: 
+826:   img,
+          ^
+827:   svg,
+828:   video,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:827:2 Unused CSS selector "svg"
+https://svelte.dev/e/css_unused_selector
+825: 
+826:   img,
+827:   svg,
+          ^
+828:   video,
+829:   canvas,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:828:2 Unused CSS selector "video"
+https://svelte.dev/e/css_unused_selector
+826:   img,
+827:   svg,
+828:   video,
+            ^
+829:   canvas,
+830:   audio,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:829:2 Unused CSS selector "canvas"
+https://svelte.dev/e/css_unused_selector
+827:   svg,
+828:   video,
+829:   canvas,
+             ^
+830:   audio,
+831:   iframe,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:830:2 Unused CSS selector "audio"
+https://svelte.dev/e/css_unused_selector
+828:   video,
+829:   canvas,
+830:   audio,
+            ^
+831:   iframe,
+832:   embed,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:831:2 Unused CSS selector "iframe"
+https://svelte.dev/e/css_unused_selector
+829:   canvas,
+830:   audio,
+831:   iframe,
+             ^
+832:   embed,
+833:   object {
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:832:2 Unused CSS selector "embed"
+https://svelte.dev/e/css_unused_selector
+830:   audio,
+831:   iframe,
+832:   embed,
+            ^
+833:   object {
+834:     display: block; /* 1 */
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:833:2 Unused CSS selector "object"
+https://svelte.dev/e/css_unused_selector
+831:   iframe,
+832:   embed,
+833:   object {
+             ^
+834:     display: block; /* 1 */
+835:     vertical-align: middle; /* 2 */
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:842:2 Unused CSS selector "img"
+https://svelte.dev/e/css_unused_selector
+840: */
+841: 
+842:   img,
+          ^
+843:   video {
+844:     max-width: 100%;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:843:2 Unused CSS selector "video"
+https://svelte.dev/e/css_unused_selector
+841: 
+842:   img,
+843:   video {
+            ^
+844:     max-width: 100%;
+845:     height: auto;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:856:2 Unused CSS selector "input"
+https://svelte.dev/e/css_unused_selector
+854: 
+855:   button,
+856:   input,
+            ^
+857:   select,
+858:   optgroup,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:857:2 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+855:   button,
+856:   input,
+857:   select,
+             ^
+858:   optgroup,
+859:   textarea,
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:858:2 Unused CSS selector "optgroup"
+https://svelte.dev/e/css_unused_selector
+856:   input,
+857:   select,
+858:   optgroup,
+               ^
+859:   textarea,
+860:   ::file-selector-button {
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:859:2 Unused CSS selector "textarea"
+https://svelte.dev/e/css_unused_selector
+857:   select,
+858:   optgroup,
+859:   textarea,
+               ^
+860:   ::file-selector-button {
+861:     font: inherit; /* 1 */
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:875:2 Unused CSS selector ":where(select:is([multiple], [size])) optgroup"
+https://svelte.dev/e/css_unused_selector
+873: */
+874: 
+875:   :where(select:is([multiple], [size])) optgroup {
+                                                     ^
+876:     font-weight: bolder;
+877:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:883:2 Unused CSS selector ":where(select:is([multiple], [size])) optgroup option"
+https://svelte.dev/e/css_unused_selector
+881: */
+882: 
+883:   :where(select:is([multiple], [size])) optgroup option {
+                                                            ^
+884:     padding-inline-start: 20px;
+885:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:919:2 Unused CSS selector "textarea"
+https://svelte.dev/e/css_unused_selector
+917: */
+918: 
+919:   textarea {
+               ^
+920:     resize: vertical;
+921:   }
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:990:2 Unused CSS selector "input:where([type="button"], [type="reset"], [type="submit"])"
+https://svelte.dev/e/css_unused_selector
+988: 
+989:   button,
+990:   input:where([type="button"], [type="reset"], [type="submit"]),
+                                                                    ^
+991:   ::file-selector-button {
+992:     appearance: button;
+12:01:36 PM [vite-plugin-svelte] src/routes/+layout.svelte:1008:2 Unused CSS selector "[hidden]:where(:not([hidden="until-found"]))"
+https://svelte.dev/e/css_unused_selector
+1006: */
+1007: 
+1008:   [hidden]:where(:not([hidden="until-found"])) {
+                                                    ^
+1009:     display: none !important;
+1010:   }
+"notifyManager" and "replaceEqualDeep" are imported from external module "@tanstack/query-core" but never used in "node_modules/@tanstack/svelte-query/dist/createMutation.svelte.js" and "node_modules/@tanstack/svelte-query/dist/useMutationState.svelte.js".
+✓ 4464 modules transformed.
+rendering chunks...
+vite v7.3.1 building client environment for production...
+transforming...
+12:01:40 PM [vite-plugin-svelte] src/lib/components/MoviePreferencesForm.svelte:346:38 This reference only captures the initial value of `initialPreferences`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+344:   };
+345: 
+346:   let prefs: MoviePreferences = $state(initialPreferences || { ...defaultPrefs });
+                                                              ^
+347:   let lockedFilters = $state<LockedFilters>({});
+348:   let showAdvanced = $state(false);
+12:01:40 PM [vite-plugin-svelte] src/lib/components/RecommendationCard.svelte:66:32 This reference only captures the initial value of `recommendation`. Did you mean to reference it inside a derived instead?
+https://svelte.dev/e/state_referenced_locally
+64:   let rating = $state<MovieUserRating | null>(null);
+65:   let verifiedImdbId = $state<string | null>(null);
+66:   let posterUrl = $state<string>(recommendation.imageUrl || '');
+                                                   ^
+67: 
+68:   // Load rating and list status on mount
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:633:2 Unused CSS selector "html"
+https://svelte.dev/e/css_unused_selector
+631: */
+632: 
+633:   html,
+           ^
+634:   :host {
+635:     line-height: 1.5; /* 1 */
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:665:2 Unused CSS selector "hr"
+https://svelte.dev/e/css_unused_selector
+663: */
+664: 
+665:   hr {
+         ^
+666:     height: 0; /* 1 */
+667:     color: inherit; /* 2 */
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:675:2 Unused CSS selector "abbr:where([title])"
+https://svelte.dev/e/css_unused_selector
+673: */
+674: 
+675:   abbr:where([title]) {
+                          ^
+676:     -webkit-text-decoration: underline dotted;
+677:     text-decoration: underline dotted;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:684:2 Unused CSS selector "h1"
+https://svelte.dev/e/css_unused_selector
+682: */
+683: 
+684:   h1,
+         ^
+685:   h2,
+686:   h3,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:685:2 Unused CSS selector "h2"
+https://svelte.dev/e/css_unused_selector
+683: 
+684:   h1,
+685:   h2,
+         ^
+686:   h3,
+687:   h4,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:686:2 Unused CSS selector "h3"
+https://svelte.dev/e/css_unused_selector
+684:   h1,
+685:   h2,
+686:   h3,
+         ^
+687:   h4,
+688:   h5,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:687:2 Unused CSS selector "h4"
+https://svelte.dev/e/css_unused_selector
+685:   h2,
+686:   h3,
+687:   h4,
+         ^
+688:   h5,
+689:   h6 {
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:688:2 Unused CSS selector "h5"
+https://svelte.dev/e/css_unused_selector
+686:   h3,
+687:   h4,
+688:   h5,
+         ^
+689:   h6 {
+690:     font-size: inherit;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:689:2 Unused CSS selector "h6"
+https://svelte.dev/e/css_unused_selector
+687:   h4,
+688:   h5,
+689:   h6 {
+         ^
+690:     font-size: inherit;
+691:     font-weight: inherit;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:708:2 Unused CSS selector "b"
+https://svelte.dev/e/css_unused_selector
+706: */
+707: 
+708:   b,
+        ^
+709:   strong {
+710:     font-weight: bolder;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:709:2 Unused CSS selector "strong"
+https://svelte.dev/e/css_unused_selector
+707: 
+708:   b,
+709:   strong {
+             ^
+710:     font-weight: bolder;
+711:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:720:2 Unused CSS selector "code"
+https://svelte.dev/e/css_unused_selector
+718: */
+719: 
+720:   code,
+           ^
+721:   kbd,
+722:   samp,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:721:2 Unused CSS selector "kbd"
+https://svelte.dev/e/css_unused_selector
+719: 
+720:   code,
+721:   kbd,
+          ^
+722:   samp,
+723:   pre {
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:722:2 Unused CSS selector "samp"
+https://svelte.dev/e/css_unused_selector
+720:   code,
+721:   kbd,
+722:   samp,
+           ^
+723:   pre {
+724:     font-family: --theme(
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:723:2 Unused CSS selector "pre"
+https://svelte.dev/e/css_unused_selector
+721:   kbd,
+722:   samp,
+723:   pre {
+          ^
+724:     font-family: --theme(
+725:       --default-mono-font-family,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:750:2 Unused CSS selector "small"
+https://svelte.dev/e/css_unused_selector
+748: */
+749: 
+750:   small {
+            ^
+751:     font-size: 80%;
+752:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:758:2 Unused CSS selector "sub"
+https://svelte.dev/e/css_unused_selector
+756: */
+757: 
+758:   sub,
+          ^
+759:   sup {
+760:     font-size: 75%;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:759:2 Unused CSS selector "sup"
+https://svelte.dev/e/css_unused_selector
+757: 
+758:   sub,
+759:   sup {
+          ^
+760:     font-size: 75%;
+761:     line-height: 0;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:766:2 Unused CSS selector "sub"
+https://svelte.dev/e/css_unused_selector
+764:   }
+765: 
+766:   sub {
+          ^
+767:     bottom: -0.25em;
+768:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:770:2 Unused CSS selector "sup"
+https://svelte.dev/e/css_unused_selector
+768:   }
+769: 
+770:   sup {
+          ^
+771:     top: -0.5em;
+772:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:780:2 Unused CSS selector "table"
+https://svelte.dev/e/css_unused_selector
+778: */
+779: 
+780:   table {
+            ^
+781:     text-indent: 0; /* 1 */
+782:     border-color: inherit; /* 2 */
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:798:2 Unused CSS selector "progress"
+https://svelte.dev/e/css_unused_selector
+796: */
+797: 
+798:   progress {
+               ^
+799:     vertical-align: baseline;
+800:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:806:2 Unused CSS selector "summary"
+https://svelte.dev/e/css_unused_selector
+804: */
+805: 
+806:   summary {
+              ^
+807:     display: list-item;
+808:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:814:2 Unused CSS selector "ol"
+https://svelte.dev/e/css_unused_selector
+812: */
+813: 
+814:   ol,
+         ^
+815:   ul,
+816:   menu {
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:815:2 Unused CSS selector "ul"
+https://svelte.dev/e/css_unused_selector
+813: 
+814:   ol,
+815:   ul,
+         ^
+816:   menu {
+817:     list-style: none;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:816:2 Unused CSS selector "menu"
+https://svelte.dev/e/css_unused_selector
+814:   ol,
+815:   ul,
+816:   menu {
+           ^
+817:     list-style: none;
+818:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:826:2 Unused CSS selector "img"
+https://svelte.dev/e/css_unused_selector
+824: */
+825: 
+826:   img,
+          ^
+827:   svg,
+828:   video,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:827:2 Unused CSS selector "svg"
+https://svelte.dev/e/css_unused_selector
+825: 
+826:   img,
+827:   svg,
+          ^
+828:   video,
+829:   canvas,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:828:2 Unused CSS selector "video"
+https://svelte.dev/e/css_unused_selector
+826:   img,
+827:   svg,
+828:   video,
+            ^
+829:   canvas,
+830:   audio,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:829:2 Unused CSS selector "canvas"
+https://svelte.dev/e/css_unused_selector
+827:   svg,
+828:   video,
+829:   canvas,
+             ^
+830:   audio,
+831:   iframe,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:830:2 Unused CSS selector "audio"
+https://svelte.dev/e/css_unused_selector
+828:   video,
+829:   canvas,
+830:   audio,
+            ^
+831:   iframe,
+832:   embed,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:831:2 Unused CSS selector "iframe"
+https://svelte.dev/e/css_unused_selector
+829:   canvas,
+830:   audio,
+831:   iframe,
+             ^
+832:   embed,
+833:   object {
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:832:2 Unused CSS selector "embed"
+https://svelte.dev/e/css_unused_selector
+830:   audio,
+831:   iframe,
+832:   embed,
+            ^
+833:   object {
+834:     display: block; /* 1 */
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:833:2 Unused CSS selector "object"
+https://svelte.dev/e/css_unused_selector
+831:   iframe,
+832:   embed,
+833:   object {
+             ^
+834:     display: block; /* 1 */
+835:     vertical-align: middle; /* 2 */
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:842:2 Unused CSS selector "img"
+https://svelte.dev/e/css_unused_selector
+840: */
+841: 
+842:   img,
+          ^
+843:   video {
+844:     max-width: 100%;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:843:2 Unused CSS selector "video"
+https://svelte.dev/e/css_unused_selector
+841: 
+842:   img,
+843:   video {
+            ^
+844:     max-width: 100%;
+845:     height: auto;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:856:2 Unused CSS selector "input"
+https://svelte.dev/e/css_unused_selector
+854: 
+855:   button,
+856:   input,
+            ^
+857:   select,
+858:   optgroup,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:857:2 Unused CSS selector "select"
+https://svelte.dev/e/css_unused_selector
+855:   button,
+856:   input,
+857:   select,
+             ^
+858:   optgroup,
+859:   textarea,
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:858:2 Unused CSS selector "optgroup"
+https://svelte.dev/e/css_unused_selector
+856:   input,
+857:   select,
+858:   optgroup,
+               ^
+859:   textarea,
+860:   ::file-selector-button {
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:859:2 Unused CSS selector "textarea"
+https://svelte.dev/e/css_unused_selector
+857:   select,
+858:   optgroup,
+859:   textarea,
+               ^
+860:   ::file-selector-button {
+861:     font: inherit; /* 1 */
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:875:2 Unused CSS selector ":where(select:is([multiple], [size])) optgroup"
+https://svelte.dev/e/css_unused_selector
+873: */
+874: 
+875:   :where(select:is([multiple], [size])) optgroup {
+                                                     ^
+876:     font-weight: bolder;
+877:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:883:2 Unused CSS selector ":where(select:is([multiple], [size])) optgroup option"
+https://svelte.dev/e/css_unused_selector
+881: */
+882: 
+883:   :where(select:is([multiple], [size])) optgroup option {
+                                                            ^
+884:     padding-inline-start: 20px;
+885:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:919:2 Unused CSS selector "textarea"
+https://svelte.dev/e/css_unused_selector
+917: */
+918: 
+919:   textarea {
+               ^
+920:     resize: vertical;
+921:   }
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:990:2 Unused CSS selector "input:where([type="button"], [type="reset"], [type="submit"])"
+https://svelte.dev/e/css_unused_selector
+988: 
+989:   button,
+990:   input:where([type="button"], [type="reset"], [type="submit"]),
+                                                                    ^
+991:   ::file-selector-button {
+992:     appearance: button;
+12:01:40 PM [vite-plugin-svelte] src/routes/+layout.svelte:1008:2 Unused CSS selector "[hidden]:where(:not([hidden="until-found"]))"
+https://svelte.dev/e/css_unused_selector
+1006: */
+1007: 
+1008:   [hidden]:where(:not([hidden="until-found"])) {
+                                                    ^
+1009:     display: none !important;
+1010:   }
+12:01:46 PM [vite-plugin-svelte] src/lib/components/ui/toggle-group/toggle-group.svelte:36:2 This reference only captures the initial value of `variant`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+34: 
+35:   setToggleGroupCtx({
+36:     variant,
+               ^
+37:     size,
+38:     spacing,
+12:01:46 PM [vite-plugin-svelte] src/lib/components/ui/toggle-group/toggle-group.svelte:37:2 This reference only captures the initial value of `size`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+35:   setToggleGroupCtx({
+36:     variant,
+37:     size,
+            ^
+38:     spacing,
+39:   });
+12:01:46 PM [vite-plugin-svelte] src/lib/components/ui/toggle-group/toggle-group.svelte:38:2 This reference only captures the initial value of `spacing`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+36:     variant,
+37:     size,
+38:     spacing,
+               ^
+39:   });
+40: </script>
+✓ 4483 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /Users/harold/projects/aimovie/src/lib/browser-storage.ts is dynamically imported by /Users/harold/projects/aimovie/src/lib/components/RecommendationCard.svelte, /Users/harold/projects/aimovie/src/lib/components/RecommendationCard.svelte but also statically imported by /Users/harold/projects/aimovie/src/lib/components/RecommendationCard.svelte, /Users/harold/projects/aimovie/src/lib/stores/discover.ts, /Users/harold/projects/aimovie/src/lib/utils/promptGenerator.ts, dynamic import will not move module into another chunk.
+
+computing gzip size...
+.svelte-kit/output/client/_app/version.json                         0.03 kB │ gzip:  0.05 kB
+.svelte-kit/output/client/.vite/manifest.json                       3.43 kB │ gzip:  0.67 kB
+.svelte-kit/output/client/_app/immutable/assets/2.CscGqxVa.css      3.81 kB │ gzip:  1.09 kB
+.svelte-kit/output/client/_app/immutable/assets/0.Bdhhl0Q6.css     93.17 kB │ gzip: 17.04 kB
+.svelte-kit/output/client/_app/immutable/chunks/BW-SjxuL.js         0.04 kB │ gzip:  0.06 kB
+.svelte-kit/output/client/_app/immutable/entry/start.CC99bAeU.js    0.08 kB │ gzip:  0.09 kB
+.svelte-kit/output/client/_app/immutable/chunks/DJc3pmXn.js         0.14 kB │ gzip:  0.13 kB
+.svelte-kit/output/client/_app/immutable/nodes/1.Dwpb5v_2.js        0.46 kB │ gzip:  0.30 kB
+.svelte-kit/output/client/_app/immutable/chunks/EymSrpn1.js         0.51 kB │ gzip:  0.32 kB
+.svelte-kit/output/client/_app/immutable/chunks/PPVm8Dsz.js         1.23 kB │ gzip:  0.72 kB
+.svelte-kit/output/client/_app/immutable/entry/app.1RtQy8YI.js      4.09 kB │ gzip:  1.88 kB
+.svelte-kit/output/client/_app/immutable/chunks/DpYFvGtk.js         5.65 kB │ gzip:  2.26 kB
+.svelte-kit/output/client/_app/immutable/chunks/BGrr5vvM.js         8.25 kB │ gzip:  3.61 kB
+.svelte-kit/output/client/_app/immutable/chunks/QtX314zb.js        13.54 kB │ gzip:  5.76 kB
+.svelte-kit/output/client/_app/immutable/chunks/CcSqfep2.js        24.28 kB │ gzip:  9.47 kB
+.svelte-kit/output/client/_app/immutable/chunks/D0YCc-qW.js        25.70 kB │ gzip: 10.10 kB
+.svelte-kit/output/client/_app/immutable/nodes/0.BWZwAWnw.js       50.06 kB │ gzip: 16.81 kB
+.svelte-kit/output/client/_app/immutable/nodes/2.CoryeKSV.js      272.98 kB │ gzip: 77.70 kB
+✓ built in 9.24s
+.svelte-kit/output/server/.vite/manifest.json                                       4.63 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.CscGqxVa.css                  3.81 kB
+.svelte-kit/output/server/_app/immutable/assets/_layout.DbaPb2wv.css               93.14 kB
+.svelte-kit/output/server/chunks/false.js                                           0.04 kB
+.svelte-kit/output/server/chunks/environment.js                                     0.19 kB
+.svelte-kit/output/server/chunks/shared-server.js                                   0.28 kB
+.svelte-kit/output/server/internal.js                                               0.43 kB
+.svelte-kit/output/server/chunks/server.js                                          0.45 kB
+.svelte-kit/output/server/entries/fallbacks/error.svelte.js                         0.56 kB
+.svelte-kit/output/server/chunks/client.js                                          0.84 kB
+.svelte-kit/output/server/chunks/utils.js                                           1.15 kB
+.svelte-kit/output/server/chunks/index.js                                           1.43 kB
+.svelte-kit/output/server/chunks/context.js                                         3.35 kB
+.svelte-kit/output/server/chunks/gemini-manager.js                                  3.77 kB
+.svelte-kit/output/server/chunks/events.js                                          3.93 kB
+.svelte-kit/output/server/chunks/exports.js                                         5.57 kB
+.svelte-kit/output/server/chunks/toast-state.svelte.js                              6.40 kB
+.svelte-kit/output/server/entries/endpoints/api/recommendations/_server.ts.js      13.60 kB
+.svelte-kit/output/server/entries/endpoints/api/ai/recommendations/_server.ts.js   13.61 kB
+.svelte-kit/output/server/chunks/shared.js                                         17.71 kB
+.svelte-kit/output/server/remote-entry.js                                          18.90 kB
+.svelte-kit/output/server/chunks/internal.js                                       25.28 kB
+.svelte-kit/output/server/entries/pages/_layout.svelte.js                          33.10 kB
+.svelte-kit/output/server/chunks/index2.js                                         81.49 kB
+.svelte-kit/output/server/index.js                                                126.69 kB
+.svelte-kit/output/server/entries/pages/_page.svelte.js                           336.80 kB
+✓ built in 16.87s
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-auto
+  Could not detect a supported production environment. See https://svelte.dev/docs/kit/adapters to learn how to configure your app to run on the platform of your choosing
+  ✔ done
