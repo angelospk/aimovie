@@ -1,27 +1,34 @@
 <script lang="ts">
-	import type { MovieRecommendation, MovieUserRating, TraktUser } from '$lib/types/discover';
-	import { Button } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Eye, Bookmark, ThumbsDown, Check } from 'lucide-svelte';
-	import { verifyImdbId } from '$lib/utils/imdbVerifier';
+	import type {
+		MovieRecommendation,
+		MovieUserRating,
+		TraktUser,
+	} from "$lib/types/discover";
+	import { Button } from "$lib/components/ui/button";
+	import { Badge } from "$lib/components/ui/badge";
+	import { Eye, Bookmark, ThumbsDown, Check, Youtube } from "lucide-svelte";
+	import { verifyImdbId } from "$lib/utils/imdbVerifier";
 	import {
 		saveWatchlistItem,
 		removeWatchlistItem,
 		saveMovieRating,
 		getMovieRating,
-		getWatchlist
-	} from '$lib/utils/localStorage';
+		getWatchlist,
+	} from "$lib/utils/localStorage";
 	import {
 		refreshWatchlist,
 		markAsNotInterested,
-		removeFromNotInterested
-	} from '$lib/stores/discover';
-	import { addToTraktWatchlist, markAsWatchedOnTrakt } from '$lib/utils/traktApi';
-	import { getViewingHistory, getNotInterested } from '$lib/browser-storage';
-	import ClickablePoster from '$lib/components/ClickablePoster.svelte';
-	import { settings } from '$lib/store.svelte';
+		removeFromNotInterested,
+	} from "$lib/stores/discover";
+	import {
+		addToTraktWatchlist,
+		markAsWatchedOnTrakt,
+	} from "$lib/utils/traktApi";
+	import { getViewingHistory, getNotInterested } from "$lib/browser-storage";
+	import ClickablePoster from "$lib/components/ClickablePoster.svelte";
+	import { settings } from "$lib/store.svelte";
 
-	type Language = 'el' | 'en';
+	type Language = "el" | "en";
 
 	interface CardTranslations {
 		watched: string;
@@ -35,23 +42,23 @@
 
 	const t: Record<Language, CardTranslations> = {
 		el: {
-			watched: 'Είδα',
-			watchlist: 'Θέλω να δω',
-			notForMe: 'Δεν με ενδιαφέρει',
-			clear: 'Καθαρισμός',
-			watchedBadge: 'Είδα',
-			wantBadge: 'Θέλω',
-			notInterestedBadge: 'Δεν ενδιαφέρει'
+			watched: "Είδα",
+			watchlist: "Θέλω να δω",
+			notForMe: "Δεν με ενδιαφέρει",
+			clear: "Καθαρισμός",
+			watchedBadge: "Είδα",
+			wantBadge: "Θέλω",
+			notInterestedBadge: "Δεν ενδιαφέρει",
 		},
 		en: {
-			watched: 'Watched',
-			watchlist: 'Watchlist',
-			notForMe: 'Not for me',
-			clear: 'Clear',
-			watchedBadge: 'Watched',
-			wantBadge: 'Want',
-			notInterestedBadge: 'Not interested'
-		}
+			watched: "Watched",
+			watchlist: "Watchlist",
+			notForMe: "Not for me",
+			clear: "Clear",
+			watchedBadge: "Watched",
+			wantBadge: "Want",
+			notInterestedBadge: "Not interested",
+		},
 	};
 
 	const tr = $derived(t[settings.lang as Language]);
@@ -63,7 +70,7 @@
 
 	let rating = $state<MovieUserRating | null>(null);
 	let verifiedImdbId = $state<string | null>(null);
-	let posterUrl = $state<string>(recommendation.imageUrl || '');
+	let posterUrl = $state<string>(recommendation.imageUrl || "");
 
 	// Load rating and list status on mount
 	$effect(() => {
@@ -74,13 +81,17 @@
 			const correctImdbId = verifiedImdbId || recommendation.id;
 
 			const isWatched = history.some((h) => h.id === correctImdbId);
-			const isWatchlist = watchlist.some((w) => w.movie.id === correctImdbId);
-			const isNotInterested = notInterested.some((n) => n.id === correctImdbId);
+			const isWatchlist = watchlist.some(
+				(w) => w.movie.id === correctImdbId,
+			);
+			const isNotInterested = notInterested.some(
+				(n) => n.id === correctImdbId,
+			);
 
 			rating = {
 				watched: isWatched,
 				wantsToWatch: isWatchlist,
-				doesNotWant: isNotInterested
+				doesNotWant: isNotInterested,
 			};
 		};
 
@@ -90,13 +101,23 @@
 	// Verify IMDb ID asynchronously and get poster image
 	$effect(() => {
 		if (recommendation.id && recommendation.title && recommendation.year) {
-			verifyImdbId(recommendation.id, recommendation.title, recommendation.year).then((result) => {
+			verifyImdbId(
+				recommendation.id,
+				recommendation.title,
+				recommendation.year,
+			).then((result) => {
 				if (result) {
 					verifiedImdbId = result.id;
 					// Store image URL in recommendation if we don't have it yet
 					if (result.imageUrl && !recommendation.imageUrl) {
-						recommendation.imageUrl = result.imageUrl.replace('_V1_.', '_V1_UX550_.');
-						posterUrl = result.imageUrl.replace('_V1_.', '_V1_UX550_.'); // Update reactive state
+						recommendation.imageUrl = result.imageUrl.replace(
+							"_V1_.",
+							"_V1_UX550_.",
+						);
+						posterUrl = result.imageUrl.replace(
+							"_V1_.",
+							"_V1_UX550_.",
+						); // Update reactive state
 					}
 				}
 			});
@@ -107,7 +128,7 @@
 		const newRating: MovieUserRating = {
 			watched: true,
 			wantsToWatch: false,
-			doesNotWant: false
+			doesNotWant: false,
 		};
 		// saveMovieRating(recommendation.id, newRating); -- Deprecated logic, rely on lists
 		rating = newRating;
@@ -134,18 +155,22 @@
 
 		// For now simply updating local state, assuming integration elsewhere or explicit add:
 		// Actually, let's add to viewing history to be robust
-		const { addViewingHistory } = await import('$lib/browser-storage');
+		const { addViewingHistory } = await import("$lib/browser-storage");
 		addViewingHistory({
 			id: correctImdbId,
 			title: recommendation.title,
 			year: recommendation.year.toString(),
 			type: recommendation.type,
-			imageUrl: posterUrl
+			imageUrl: posterUrl,
 		});
 
 		// Sync with Trakt if connected (use verified ID)
 		if (traktUser) {
-			await markAsWatchedOnTrakt(traktUser.accessToken, correctImdbId, recommendation.type);
+			await markAsWatchedOnTrakt(
+				traktUser.accessToken,
+				correctImdbId,
+				recommendation.type,
+			);
 		}
 	}
 
@@ -153,7 +178,7 @@
 		const newRating: MovieUserRating = {
 			watched: false,
 			wantsToWatch: true,
-			doesNotWant: false
+			doesNotWant: false,
 		};
 		// saveMovieRating(recommendation.id, newRating);
 		rating = newRating;
@@ -167,7 +192,7 @@
 		// Create movie object with verified ID
 		const movieToSave = {
 			...recommendation,
-			id: correctImdbId
+			id: correctImdbId,
 		};
 
 		// Add to watchlist with verified ID and image URL
@@ -175,13 +200,17 @@
 			movie: movieToSave,
 			explanation: recommendation.explanation,
 			addedAt: Date.now(),
-			imageUrl: posterUrl
+			imageUrl: posterUrl,
 		});
 		refreshWatchlist();
 
 		// Sync with Trakt if connected (use verified ID)
 		if (traktUser) {
-			await addToTraktWatchlist(traktUser.accessToken, correctImdbId, recommendation.type);
+			await addToTraktWatchlist(
+				traktUser.accessToken,
+				correctImdbId,
+				recommendation.type,
+			);
 		}
 	}
 
@@ -189,7 +218,7 @@
 		const newRating: MovieUserRating = {
 			watched: false,
 			wantsToWatch: false,
-			doesNotWant: true
+			doesNotWant: true,
 		};
 		// saveMovieRating(recommendation.id, newRating);
 		rating = newRating;
@@ -207,7 +236,7 @@
 			title: recommendation.title,
 			year: recommendation.year.toString(),
 			type: recommendation.type,
-			imageUrl: posterUrl
+			imageUrl: posterUrl,
 		});
 	}
 
@@ -223,7 +252,9 @@
 		refreshWatchlist();
 
 		// Also remove from viewing history
-		const { removeViewingHistoryItem } = await import('$lib/browser-storage');
+		const { removeViewingHistoryItem } = await import(
+			"$lib/browser-storage"
+		);
 		removeViewingHistoryItem(correctImdbId);
 	}
 </script>
@@ -259,42 +290,64 @@
 
 	<div class="flex justify-between items-start gap-2">
 		<div class="flex-1 min-w-0">
-			<h3 class="font-semibold text-white">{recommendation.title} ({recommendation.year})</h3>
+			<h3 class="font-semibold text-white">
+				{recommendation.title} ({recommendation.year})
+			</h3>
 			<p class="text-sm text-purple-300">{recommendation.director}</p>
 		</div>
-		<div class="flex gap-2 items-center flex-shrink-0">
-			<Badge variant="secondary" class="capitalize">{recommendation.type}</Badge>
-			{#if verifiedImdbId}
+		<div class="flex flex-col gap-2 items-end flex-shrink-0">
+			<Badge variant="secondary" class="capitalize"
+				>{recommendation.type}</Badge
+			>
+			<div class="flex gap-2 items-center">
+				{#if verifiedImdbId}
+					<a
+						href="https://www.imdb.com/title/{verifiedImdbId}"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center px-1.5 py-1 rounded hover:opacity-80 transition-opacity"
+						title="View on IMDb"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="32"
+							height="16"
+							viewBox="0 0 64 32"
+							class="drop-shadow-sm"
+						>
+							<rect
+								width="64"
+								height="32"
+								fill="#f5c518"
+								rx="4"
+							/>
+							<text
+								x="50%"
+								y="50%"
+								dominant-baseline="middle"
+								text-anchor="middle"
+								font-family="Arial, sans-serif"
+								font-weight="bold"
+								font-size="18"
+								fill="#000"
+							>
+								IMDb
+							</text>
+						</svg>
+					</a>
+				{/if}
 				<a
-					href="https://www.imdb.com/title/{verifiedImdbId}"
+					href="https://www.youtube.com/results?search_query={encodeURIComponent(
+						`${recommendation.title} ${recommendation.year} ${settings.lang === 'el' ? 'greek' : ''} trailer`,
+					)}"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center px-1.5 py-1 rounded hover:opacity-80 transition-opacity"
-					title="View on IMDb"
+					class="inline-flex items-center px-1 py-0.5 rounded bg-[#FF0000] text-white hover:opacity-90 transition-opacity"
+					title="Watch Trailer on YouTube"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="32"
-						height="16"
-						viewBox="0 0 64 32"
-						class="drop-shadow-sm"
-					>
-						<rect width="64" height="32" fill="#f5c518" rx="4" />
-						<text
-							x="50%"
-							y="50%"
-							dominant-baseline="middle"
-							text-anchor="middle"
-							font-family="Arial, sans-serif"
-							font-weight="bold"
-							font-size="18"
-							fill="#000"
-						>
-							IMDb
-						</text>
-					</svg>
+					<Youtube class="w-3.5 h-3.5" />
 				</a>
-			{/if}
+			</div>
 		</div>
 	</div>
 
@@ -304,7 +357,9 @@
 		{/each}
 	</div>
 
-	<p class="text-purple-200 text-sm leading-relaxed">{recommendation.explanation}</p>
+	<p class="text-purple-200 text-sm leading-relaxed">
+		{recommendation.explanation}
+	</p>
 
 	<div class="mt-auto pt-3 flex flex-wrap gap-2">
 		{#if rating?.watched || rating?.wantsToWatch || rating?.doesNotWant}
